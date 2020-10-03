@@ -54,11 +54,11 @@ Either push this message into SQS
 ```
 {
 	param: {
-		'DataName': '<name>'
-        'ForecastHorizon': 90,
-        'NumberOfBacktestWindows': 2,
-        'PerformDelete': true,
-        'dateCreate': 'YYYYMMDD'
+		'DataName': '<name>',
+        	'ForecastHorizon': 90,
+        	'NumberOfBacktestWindows': 2,
+        	'PerformDelete': true,
+        	'dateCreate': 'YYYYMMDD'
 	}
 
 }
@@ -69,11 +69,11 @@ Run directly in Lambda console (make sure to uncomment `payload = record['body']
 {
 	body:{
 		param:{
-			'DataName': '<name>'
-        	'ForecastHorizon': 90,
-        	'NumberOfBacktestWindows': 2,
-        	'PerformDelete': true,
-        	'dateCreate': 'YYYYMMDD'
+			'DataName': '<name>',
+        		'ForecastHorizon': 90,
+        		'NumberOfBacktestWindows': 2,
+        		'PerformDelete': true,
+        		'dateCreate': 'YYYYMMDD'
 		}
 	}
 }
@@ -87,68 +87,68 @@ Run directly in Lambda console (make sure to uncomment `payload = record['body']
 ├── lambdas
 │   ├── createdataset
 │   │   └── dataset.py
-│ 	│ 			This Lambda calls the CreateDataset API to create ARNs for 
-│ 	│ 			them
+│   │ 		This Lambda calls the CreateDataset API to create ARNs for 
+│   │ 		them
 │   ├── createdatasetgroup
 │   │   └── datasetgroup.py
-│ 	│ 			This Lambda calls the CreateDatasetGroup API to create ARNs 
-│ 	│ 			for our forecasting group
+│   │ 		This Lambda calls the CreateDatasetGroup API to create ARNs 
+│   │ 		for our forecasting group
 │   ├── createdatasetimportjob
 │   │   └── datasetimport.py
-│ 	│ 			This Lambda calls the CreateDatasetImportJob API to populate 
-|	|			the dataset ARNs with target/related/metadata that we supply
-│   │ 			in S3
+│   │ 		This Lambda calls the CreateDatasetImportJob API to populate 
+|   |		the dataset ARNs with target/related/metadata that we supply
+│   │ 		in S3
 │   ├── createforecast
 │   │   └── forecast.py
-│   │ 			This Lambda calls the CreateForecast API to create a forecast
-│ 	│ 			using the specified predictors
+│   │ 		This Lambda calls the CreateForecast API to create a forecast
+│   │ 		using the specified predictors
 │   ├── createpredictor
 │   │   └── predictor.py
-│ 	│ 			This Lambda calls the CreatePredictor API to train the 
-│  	│ 			specified predictors with the data
+│   │ 		This Lambda calls the CreatePredictor API to train the 
+│   │ 		specified predictors with the data
 │   ├── deletedataset
 │   │   └── deletedataset.py
-│ 	│ 			This Lmabda calls the DeleteDatasetImportJob, 
-│ 	│ 			DeleteDatasetGroup, DeleteDataset API after the forecasts
-│ 	│ 			and predictors are deleted!
+│   │ 		This Lmabda calls the DeleteDatasetImportJob, 
+│   │ 		DeleteDatasetGroup, DeleteDataset API after the forecasts
+│   │ 		and predictors are deleted!
 │   ├── deleteforecast
 │   │   └── deleteforecast.py
-│ 	│ 			This Lambda calls the DeleteForecast API to delete forecasts
+│   │ 		This Lambda calls the DeleteForecast API to delete forecasts
 │   ├── deletepredictor
 │   │   └── deletepredictor.py
-│ 	│ 		 This Lambda calls the DeletePredcitor API to delete predictors
+│   │ 		This Lambda calls the DeletePredcitor API to delete predictors
 │   ├── failure
 │   │   └── failure.py
-│ 	│ 			This Lambda will be use to handle error if any occurs.
+│   │ 		This Lambda will be use to handle error if any occurs.
 │   ├── notify
 │   │   └──  notify.py
-│ 	│ 			This Lambda will first read the exported forecast results
-│ 	│ 			in S3 and then insert the forecast results and metrics into 
-│ 	│ 			Snowflake. It also updates the forecast_available flag
-│ 	│ 			in the parameters table
+│   │ 		This Lambda will first read the exported forecast results
+│   │ 		in S3 and then insert the forecast results and metrics into 
+│   │ 		Snowflake. It also updates the forecast_available flag
+│   │ 		in the parameters table
 │   └── s3lambda
 │       ├── parse.py
-│ 			 	This Lambda will first query Snowflake to get the 
-│ 			 	target, related, metadata and validation data based on the 
-│ 			 	parameters provided by the UI. It also here where the 
-│ 			 	Step Function API is called to kickstart the forecasing
-│ 			 	pipeline.
+│ 		This Lambda will first query Snowflake to get the 
+│ 		target, related, metadata and validation data based on the 
+│ 		parameters provided by the UI. It also here where the 
+│ 		Step Function API is called to kickstart the forecasing
+│ 		pipeline.
 │       └── schema.py
-│ 				This script will be called by parse.py to populate the schema
-│ 				that will passed along the forecasting pipeline.
-│ 				It'll contain information that are required by the Forecast 
-│ 				API
+│ 		This script will be called by parse.py to populate the schema
+│ 		that will passed along the forecasting pipeline.
+│ 		It'll contain information that are required by the Forecast 
+│ 		API
 ├── shared
-│ 	│ This is a Shared Lambda Layer used by a few of the Lambdas above
+│ 	 This is a Shared Lambda Layer used by a few of the Lambdas above
 │   └── python
 │       ├── actions.py
-│ 		 		Custom errors that Step Function will depend on to decide 
-|				whether to retry or stop the MLOps.
-│ 			 	For now, we have the ResourcePending and ResourceFailure
-│ 			 	errors.
+│ 		Custom errors that Step Function will depend on to decide 
+|		whether to retry or stop the MLOps.
+│ 		For now, we have the ResourcePending and ResourceFailure
+│ 		errors.
 │       └── loader.py
-│ 				A wrapper for the AWS Forecast Service. It also contains our
-│ 				logger
+│ 		A wrapper for the AWS Forecast Service. It also contains our
+│ 		logger
 └── template.yaml
 		This is the yaml file that SAM will read to deploy our architecture.
 		Modify this if you need to change the architectures or change some 
