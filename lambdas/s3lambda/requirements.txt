@@ -1,0 +1,7 @@
+#Need to use older Snowflake to ensure dependcies are small enough
+# Earliest [pandas]=== 2.1.2  https://docs.snowflake.com/en/user-guide/python-connector-pandas.html
+#Read more: https://stackoverflow.com/questions/58243179/how-can-i-connect-to-snowflake-in-aws-lambda-function-without-using-snowflake-co
+snowflake-connector-python
+requests===2.23.0
+pandas
+xlrd >= 1.0.0
