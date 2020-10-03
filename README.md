@@ -80,7 +80,7 @@ Run directly in Lambda console (make sure to uncomment `payload = record['body']
 ```
 
 **NOTE**: 
-1. DataName should fulfill the following regex `'^[a-zA-Z][a-zA-Z0-9_]*$` and shouldn't be longer than 45 characters long (instead of the original 63), as our implementation adds a few "suffixes" to the name.
+1. DataName should fulfill the following regex `^[a-zA-Z][a-zA-Z0-9_]*$` and shouldn't be longer than 45 characters long (instead of the original 63), as our implementation adds a few "suffixes" to the name.
 
 ### Code
 `````
